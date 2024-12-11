@@ -1,4 +1,5 @@
-<div class="autor">
+</header>
+<div class="author">
   <h1 class="author__heading">Hello, I'm Dawson</h1>
   <p class="author__body">Web Developer and Student</p>
 </div>
@@ -10,13 +11,28 @@
 
   <!-- Dummy data displayed until we include posts later on.-->
   <ul class="article-ul">
+    <% data.forEach(post => { %>
     <li>
-      <a href="#">
-        <span>Post Title</span>
-        <span class="article-list__date">Date</span>
+      <a href="/post/<%= post._id %>">
+        <span><%- post.title %></span>
+        <span class="article-list__date">
+          <% post.createdAt.toDateString() %>
+        </span>
       </a>
     </li>
+    <% }); %>
   </ul>
 
-  <a href="*" class="pagination"> &lt; Veiw Older Posts </a>
+  <% if (nextPage !== null) { %>
+  <a href="/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>
+  <% } %>
+
+  <!-- if prevPage is 1 then go to / -->
+  <% if (prevPage >= 1) { %> <% if (prevPage === 1) { %>
+  <a href="/" class="pagination pagination-newer">View Newer Posts &gt;</a>
+  <% } else { %>
+  <a href="/?page=<%= prevPage %>" class="pagination pagination-newer"
+    >View Newer Posts &gt;</a
+  >
+  <% } %> <% } %>
 </section>
