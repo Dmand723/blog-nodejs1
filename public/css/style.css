@@ -302,7 +302,10 @@ img {
   margin-top: 40px;
   display: inline-block;
 }
-
+.pagination-newer {
+  position: absolute;
+  left: 1050px;
+}
 .pagination:hover {
   color: var(--black);
 }
@@ -313,7 +316,9 @@ img {
   justify-content: space-between;
   align-items: center;
 }
-
+ul {
+  text-decoration: none;
+}
 .admin-posts {
   padding: 0;
   margin: 0;

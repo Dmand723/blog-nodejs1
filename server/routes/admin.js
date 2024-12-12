@@ -56,8 +56,8 @@ router.post("/admin", async (req, res) => {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
 
-    const token = jwt.sign({ userID: user._id }, jwtSecret);
-    res.cookie("token", token, { httpOnly: true });
+    // const token = jwt.sign({ userID: user._id }, jwtSecret);
+    // res.cookie("token", token, { httpOnly: true });
     res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
@@ -141,10 +141,10 @@ router.get("/add-post", authMiddleware, async (req, res) => {
 });
 
 /**
- * GET /add-post
+ * POST /add-post
  * Admin - Create New Post
  */
-router.get("/add-post/", authMiddleware, async (req, res) => {
+router.post("/add-post/", authMiddleware, async (req, res) => {
   try {
     console.log(req.body);
     const newPost = {
@@ -176,7 +176,7 @@ router.get("/edit-post/:id", authMiddleware, async (req, res) => {
 });
 
 /**
- * PUt /edit-post
+ * PUT /edit-post
  * Admin -Edit Post
  */
 router.put("/edit-post/:id", authMiddleware, async (req, res) => {
@@ -186,6 +186,20 @@ router.put("/edit-post/:id", authMiddleware, async (req, res) => {
       body: req.body.body,
       updatedAt: Date.now(),
     });
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/**
+ * DELETE /delete-post
+ * Admin - Delete post
+ */
+router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
+  try {
+    await Post.deleteOne({ _id: req.params.id });
+    res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
   }
